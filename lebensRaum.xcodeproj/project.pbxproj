@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,7 @@
 		250a95ba26587be85db0a353e6e1dea2 /* ofxCvColorImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ce9c7160245b19131dae61282ee6cb53 /* ofxCvColorImage.cpp */; };
 		63020f16c7e8ded9801112417e67ad38 /* ofxCvImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = c6151136d101f857dae12722e3c42f4a /* ofxCvImage.cpp */; };
 		675022A815D6BAEB00E3AD4D /* camHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 675022A715D6BAEB00E3AD4D /* camHandler.cpp */; };
+		67A7C7C315FA3AE8005CA474 /* ardHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 67A7C7C215FA3AE8005CA474 /* ardHandler.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -95,6 +96,8 @@
 		665780a3005496e3a4a0d9ef64d5602a /* compat.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = compat.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/legacy/compat.hpp; sourceTree = SOURCE_ROOT; };
 		675022A615D6BADD00E3AD4D /* camHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = camHandler.h; sourceTree = "<group>"; };
 		675022A715D6BAEB00E3AD4D /* camHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camHandler.cpp; sourceTree = "<group>"; };
+		67A7C7C115FA3AA9005CA474 /* ardHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ardHandler.h; sourceTree = "<group>"; };
+		67A7C7C215FA3AE8005CA474 /* ardHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ardHandler.cpp; sourceTree = "<group>"; };
 		67af0e794fa186dd25454cc945233198 /* calib3d.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = calib3d.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/calib3d/calib3d.hpp; sourceTree = SOURCE_ROOT; };
 		6b907cfbb1b0fede76c41aa0c64ddaf7 /* heap.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = heap.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/heap.h; sourceTree = SOURCE_ROOT; };
 		6dd5a3cbb6d5bba1c1354f1b16430892 /* flann.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = flann.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/flann.hpp; sourceTree = SOURCE_ROOT; };
@@ -454,6 +457,8 @@
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
 				675022A715D6BAEB00E3AD4D /* camHandler.cpp */,
 				675022A615D6BADD00E3AD4D /* camHandler.h */,
+				67A7C7C115FA3AA9005CA474 /* ardHandler.h */,
+				67A7C7C215FA3AE8005CA474 /* ardHandler.cpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -587,8 +592,11 @@
 /* Begin PBXProject section */
 		E4B69B4C0A3A1720003C02F2 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+			};
 			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "lebensRaum" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -654,6 +662,7 @@
 				63020f16c7e8ded9801112417e67ad38 /* ofxCvImage.cpp in Sources */,
 				d3301f6a0b43bb293ed97c1d5d26c840 /* ofxCvShortImage.cpp in Sources */,
 				675022A815D6BAEB00E3AD4D /* camHandler.cpp in Sources */,
+				67A7C7C315FA3AE8005CA474 /* ardHandler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -790,6 +799,7 @@
 		E4B69B600A3A1757003C02F2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -797,7 +807,6 @@
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = NONE;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -868,7 +877,6 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_52)",
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = lebensRaumDebug;
 				WRAPPER_EXTENSION = app;
 			};
@@ -877,13 +885,13 @@
 		E4B69B610A3A1757003C02F2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = NONE;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -954,7 +962,6 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = lebensRaum;
 				WRAPPER_EXTENSION = app;
 			};

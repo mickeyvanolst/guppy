@@ -29,6 +29,8 @@ void testApp::setup(){
     rgbaFbo.begin();
 	ofClear(255,255,255, 0);
     rgbaFbo.end();
+    
+    arduino.setup(5);
 
 }
 
@@ -42,6 +44,8 @@ void testApp::update(){
     rgbaFbo.begin();
     draw3d();
     rgbaFbo.end();
+    
+    arduino.update(); // nothing happening yet..
 }
 
 //--------------------------------------------------------------
@@ -60,6 +64,15 @@ void testApp::draw3d(){
     ofBox(300);
     ofSetColor(200, 100, 0);
     ofSphere(ofMap(topCam->blobX, 0, 320, -150, 150), ofMap(sideCam->blobX, 0, 320, -150, 150), ofMap(topCam->blobY, 0, 240, -150, 150), 5);
+    
+
+    ofSetColor(255, 255, 255);
+    ofLine(ofMap(topCam->blobX, 0, 320, -150, 150), ofMap(sideCam->blobX, 0, 320, -150, 150), ofMap(topCam->blobY, 0, 240, -150, 150), -150, -150, -150);
+    ofLine(ofMap(topCam->blobX, 0, 320, -150, 150), ofMap(sideCam->blobX, 0, 320, -150, 150), ofMap(topCam->blobY, 0, 240, -150, 150),  150,  150, -150);
+    ofLine(ofMap(topCam->blobX, 0, 320, -150, 150), ofMap(sideCam->blobX, 0, 320, -150, 150), ofMap(topCam->blobY, 0, 240, -150, 150),  150, -150, -150);
+    ofLine(ofMap(topCam->blobX, 0, 320, -150, 150), ofMap(sideCam->blobX, 0, 320, -150, 150), ofMap(topCam->blobY, 0, 240, -150, 150), -150,  150, -150);
+
+    
     
     ofPopMatrix();
 	
@@ -90,6 +103,17 @@ void testApp::draw(){
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
 
+    switch (key) {
+        case OF_KEY_LEFT:
+            arduino.sendData('L');
+            break;
+        case OF_KEY_RIGHT:
+            arduino.sendData('R');
+            break;
+            
+        default:
+            break;
+    }
 
 }
 

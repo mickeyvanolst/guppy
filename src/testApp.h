@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "camHandler.h"
+#include "ardHandler.h"
 
 class testApp : public ofBaseApp{
 
@@ -26,11 +27,15 @@ class testApp : public ofBaseApp{
     
         camHandler*     sideCam;
         camHandler*     topCam;
+    
+        ardHandler      arduino;
 
         // 3D stuff
         ofLight light; // creates a light and enables lighting
         ofEasyCam cam; // add mouse controls for camera movement
     
         ofFbo rgbaFbo;
+    
+
 };
 
