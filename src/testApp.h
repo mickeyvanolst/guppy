@@ -22,7 +22,8 @@ class testApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
         void draw3d();
-        
+        void sBox(float x, float y, float z, float h, float l, float d);
+    
         ofMesh          cube;
     
         camHandler*     sideCam;
@@ -35,6 +36,8 @@ class testApp : public ofBaseApp{
         ofEasyCam cam; // add mouse controls for camera movement
     
         ofFbo rgbaFbo;
+    
+        float rot;
     
 
 };

@@ -18,11 +18,12 @@ void testApp::setup(){
     // this uses depth information for occlusion
 	// rather than always drawing things on top of each other
 	//glEnable(GL_DEPTH_TEST);
+    
 	
-	// ofBox uses texture coordinates from 0-1, so you can load whatever
+	// ofBox uses texture coordinates fro 0-1, so you can load whatever
 	// sized images you want and still use them to texture your box
 	// but we have to explicitly normalize our tex coords here
-	ofEnableNormalizedTexCoords();
+	//ofEnableNormalizedTexCoords();
     
     ofSetLineWidth(2);
     
@@ -31,7 +32,7 @@ void testApp::setup(){
     rgbaFbo.end();
     
     arduino.setup(5);
-
+    
 }
 
 //--------------------------------------------------------------
@@ -56,27 +57,68 @@ void testApp::draw3d(){
     
     // 3D stuff
 	cam.begin();
-
+    
     ofPushMatrix();
     ofTranslate(0,0,0);
     ofNoFill();
     ofSetColor(255,255,255);
-    ofBox(300);
+    //ofBox(300);
+    
+    sBox(0, 0, 0, 150, 150, 150); // outer case
+    sBox(0, -144, ofMap(sideCam->blobX, 0, 320, -150, 150), 6, 150, 20); // top move bar
+    sBox(0, 0, ofMap(sideCam->blobX, 0, 320, -150, 150), 50, 50, 50); // aquarium case
+
+    
     ofSetColor(200, 100, 0);
     ofSphere(ofMap(topCam->blobX, 0, 320, -150, 150), ofMap(sideCam->blobX, 0, 320, -150, 150), ofMap(topCam->blobY, 0, 240, -150, 150), 5);
-    
-
-    ofSetColor(255, 255, 255);
-    ofLine(ofMap(topCam->blobX, 0, 320, -150, 150), ofMap(sideCam->blobX, 0, 320, -150, 150), ofMap(topCam->blobY, 0, 240, -150, 150), -150, -150, -150);
-    ofLine(ofMap(topCam->blobX, 0, 320, -150, 150), ofMap(sideCam->blobX, 0, 320, -150, 150), ofMap(topCam->blobY, 0, 240, -150, 150),  150,  150, -150);
-    ofLine(ofMap(topCam->blobX, 0, 320, -150, 150), ofMap(sideCam->blobX, 0, 320, -150, 150), ofMap(topCam->blobY, 0, 240, -150, 150),  150, -150, -150);
-    ofLine(ofMap(topCam->blobX, 0, 320, -150, 150), ofMap(sideCam->blobX, 0, 320, -150, 150), ofMap(topCam->blobY, 0, 240, -150, 150), -150,  150, -150);
-
     
     
     ofPopMatrix();
 	
 	cam.end();
+    
+}
+
+//--------------------------------------------------------------
+void testApp::sBox(float x, float y, float z, float h, float l, float d){
+    
+    ofPushMatrix();
+    ofTranslate(x, y, z);
+    //top
+    ofBeginShape();
+    ofVertex(-l, h, -d);
+    ofVertex(-l, h,  d);
+    ofVertex( l, h,  d);
+    ofVertex( l, h, -d);
+    ofVertex(-l, h, -d);
+    ofEndShape();
+    //bottom
+    ofBeginShape();
+    ofVertex(-l, -h, -d);
+    ofVertex(-l, -h,  d);
+    ofVertex( l, -h,  d);
+    ofVertex( l, -h, -d);
+    ofVertex(-l, -h, -d);
+    ofEndShape();
+    //front
+    ofBeginShape();
+    ofVertex(-l, h, -d);
+    ofVertex(l, h, -d);
+    ofVertex(l, -h, -d);
+    ofVertex(-l, -h, -d);
+    ofVertex(-l, h, -d);
+    ofEndShape();
+    //back
+    ofBeginShape();
+    ofVertex(-l,  h,  d);
+    ofVertex( l,  h,  d);
+    ofVertex( l, -h,  d);
+    ofVertex(-l, -h,  d);
+    ofVertex(-l,  h,  d);
+    ofEndShape();
+    //left
+    //right
+    ofPopMatrix();
     
 }
 
@@ -97,6 +139,8 @@ void testApp::draw(){
     
     ofSetColor(255,255,255);
     rgbaFbo.draw(0,0);
+    
+
     
 }
 
