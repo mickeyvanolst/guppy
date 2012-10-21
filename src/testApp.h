@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "camHandler.h"
 #include "ardHandler.h"
+#include "ofxTweener.h"
 
 class testApp : public ofBaseApp{
 
@@ -30,6 +31,9 @@ class testApp : public ofBaseApp{
         camHandler*     topCam;
     
         ardHandler      arduino;
+    
+        ofPoint position;
+        float radius;
 
         // 3D stuff
         ofLight light; // creates a light and enables lighting
@@ -37,7 +41,7 @@ class testApp : public ofBaseApp{
     
         ofFbo rgbaFbo;
     
-        float rot;
+        bool toggleCamview;
     
 
 };

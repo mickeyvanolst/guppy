@@ -33,6 +33,9 @@ void testApp::setup(){
     
     arduino.setup(5);
     
+    toggleCamview = true;
+    
+    radius = 5;
 }
 
 //--------------------------------------------------------------
@@ -45,6 +48,12 @@ void testApp::update(){
     rgbaFbo.begin();
     draw3d();
     rgbaFbo.end();
+    
+    
+    Tweener.update();
+    Tweener.addTween(position.x, ofMap(sideCam->blobX, 0, 320, -125, 125), 2); // aquarium case x
+    Tweener.addTween(position.y, ofMap(sideCam->blobY, 0, 240, -125, 125), 2); // aquarium case y
+    Tweener.addTween(position.z, ofMap(topCam->blobY, 0, 240, -125, 125), 2); // aquarium case z
     
     arduino.update(); // nothing happening yet..
 }
@@ -62,21 +71,18 @@ void testApp::draw3d(){
     ofTranslate(0,0,0);
     ofNoFill();
     ofSetColor(255,255,255);
-    //ofBox(300);
     
     sBox(0, 0, 0, 150, 150, 150); // outer case
-    sBox(0, -144, ofMap(sideCam->blobX, 0, 320, -150, 150), 6, 150, 20); // top move bar
-    sBox(0, 0, ofMap(sideCam->blobX, 0, 320, -150, 150), 50, 50, 50); // aquarium case
-
+    sBox(0, -144, position.z, 6, 150, 20); // top move bar
+    sBox(position.x, position.y, position.z, 50, 50, 50); // aquarium case
     
     ofSetColor(200, 100, 0);
-    ofSphere(ofMap(topCam->blobX, 0, 320, -150, 150), ofMap(sideCam->blobX, 0, 320, -150, 150), ofMap(topCam->blobY, 0, 240, -150, 150), 5);
-    
+    ofSphere(ofMap(sideCam->blobX, 0, 320, -125, 125), ofMap(sideCam->blobY, 0, 240, -125, 125), ofMap(topCam->blobY, 0, 240, -125, 125), 5);
     
     ofPopMatrix();
 	
 	cam.end();
-    
+     
 }
 
 //--------------------------------------------------------------
@@ -126,22 +132,24 @@ void testApp::sBox(float x, float y, float z, float h, float l, float d){
 void testApp::draw(){
     //ofBackground(50, 50, 50);
     ofSetColor(255, 255, 255);
-        
-    // sidecam
-    sideCam->drawOriginal(20, 20);
-    sideCam->drawHsv(350, 20);
-    sideCam->drawGrayscale(680, 20, true);
     
-    // topcam
-    topCam->drawOriginal(20, 300);
-    topCam->drawHsv(350, 300);
-    topCam->drawGrayscale(680, 300, true);
+    if(toggleCamview) {
+        // sidecam
+        sideCam->drawOriginal(20, 20);
+        sideCam->drawHsv(350, 20);
+        sideCam->drawGrayscale(680, 20, true);
+        
+        // topcam
+        topCam->drawOriginal(20, 300);
+        topCam->drawHsv(350, 300);
+        topCam->drawGrayscale(680, 300, true);
+    }
     
     ofSetColor(255,255,255);
     rgbaFbo.draw(0,0);
     
 
-    
+    //ofCircle(position.x, position.y, radius);
 }
 
 //--------------------------------------------------------------
@@ -154,7 +162,9 @@ void testApp::keyPressed(int key){
         case OF_KEY_RIGHT:
             arduino.sendData('R');
             break;
-            
+        case 'c':
+            toggleCamview = !toggleCamview;
+            break;
         default:
             break;
     }
@@ -181,6 +191,9 @@ void testApp::mousePressed(int x, int y, int button){
     
     sideCam->changeTrackingColor(x, y, button);
     topCam->changeTrackingColor(x, y, button);
+    
+    //Tweener.addTween(position.x, ofRandom(1024), 5);
+    //Tweener.addTween(position.y, ofRandom(768), 5);
     
 }
 
