@@ -9,7 +9,7 @@ void testApp::setup(){
 	rgbaFbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);
     
     sideCam = new camHandler(320, 240);
-    sideCam->initCam(3); // DV intergrated cam
+    sideCam->initCam(4); // DV intergrated cam
     
     topCam = new camHandler(320, 240);
     topCam->initCam(2); // iphone camera thingy
@@ -34,8 +34,13 @@ void testApp::setup(){
     arduino.setup(5);
     
     toggleCamview = true;
+    toggleArdSend = false;
     
     radius = 5;
+    
+    motorX = 0;
+    motorY = 0;
+    motorZ = 0;
 }
 
 //--------------------------------------------------------------
@@ -54,6 +59,15 @@ void testApp::update(){
     Tweener.addTween(position.x, ofMap(sideCam->blobX, 0, 320, -125, 125), 2); // aquarium case x
     Tweener.addTween(position.y, ofMap(sideCam->blobY, 0, 240, -125, 125), 2); // aquarium case y
     Tweener.addTween(position.z, ofMap(topCam->blobY, 0, 240, -125, 125), 2); // aquarium case z
+    
+    if(toggleArdSend) {
+        //if (position.x != motorX || position.y != motorY || position.z != motorZ) {
+            if(arduino.ardReady) {
+                printf("sending coordinates to arduino\n");
+                arduino.writeString(ofToString(int(position.x)) + "," + ofToString(int(position.y)) + "," + ofToString(int(position.z)) + ",;");
+            }
+        //}
+    }   
     
     arduino.update(); // nothing happening yet..
 }
@@ -165,6 +179,16 @@ void testApp::keyPressed(int key){
         case 'c':
             toggleCamview = !toggleCamview;
             break;
+        case 's':
+            toggleArdSend = !toggleArdSend;
+            arduino.writeString("hi,there,friend,;");
+            break;
+        case '1':
+            arduino.writeString("-125,-125,-125,;");
+            break;
+        case '2':
+            arduino.writeString("125,125,125,;");
+            break;
         default:
             break;
     }
@@ -194,6 +218,8 @@ void testApp::mousePressed(int x, int y, int button){
     
     //Tweener.addTween(position.x, ofRandom(1024), 5);
     //Tweener.addTween(position.y, ofRandom(768), 5);
+    //arduino.writeString(ofToString(int(position.x)) + "," + ofToString(int(position.y)) + "," + ofToString(int(position.z)) + ",;");
+    
     
 }
 

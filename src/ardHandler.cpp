@@ -34,10 +34,32 @@ void ardHandler::setup(int serialNumber)
 //--------------------------------------------------------------
 void ardHandler::update()
 {
-
+    readIfDone();
 }
 
 void ardHandler::sendData(char msg)
 {
     serial.writeByte(msg);
+}
+
+void ardHandler::writeString(string message)
+{
+    unsigned char* chars = (unsigned char*) message.c_str(); // cast from string to unsigned char*
+    int length = message.length();
+    serial.writeBytes(chars,length);
+}
+
+void ardHandler::readIfDone()
+{
+    if(serial.available() > 0) {
+        char getMsg = serial.readByte();
+        
+        if (getMsg == 'A') {
+            //printf("We've got an A!\n");
+            ardReady = true;
+        } else {
+            ardReady = false;
+            //printf("Nothing back yet..\n");
+        }
+    }
 }

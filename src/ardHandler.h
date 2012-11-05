@@ -19,9 +19,12 @@ public:
     void setup(int serialNumber);
     void update();
     void sendData(char msg);
+    void writeString(string message);
+    void readIfDone();
     
     ofSerial	serial;
-        
+    bool ardReady;
+    
 private:
     
 };

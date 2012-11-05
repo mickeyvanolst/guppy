@@ -42,7 +42,11 @@ class testApp : public ofBaseApp{
         ofFbo rgbaFbo;
     
         bool toggleCamview;
+        bool toggleArdSend;
     
-
+        int motorX;
+        int motorY;
+        int motorZ;
+    
 };
 
